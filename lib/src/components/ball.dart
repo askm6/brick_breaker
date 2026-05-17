@@ -8,7 +8,7 @@ import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 
 import '../brick_breaker.dart';
-import 'bat.dart';
+import 'paddle.dart';
 import 'play_area.dart';
 
 class Ball extends CircleComponent
@@ -19,13 +19,13 @@ class Ball extends CircleComponent
     required double radius,
     required this.difficultyModifier,
   }) : super(
-         radius: radius,
-         anchor: Anchor.center,
-         paint: Paint()
-           ..color = const Color(0xff1e6091)
-           ..style = PaintingStyle.fill,
-         children: [CircleHitbox()],
-       );
+          radius: radius,
+          anchor: Anchor.center,
+          paint: Paint()
+            ..color = const Color(0xff1e6091)
+            ..style = PaintingStyle.fill,
+          children: [CircleHitbox()],
+        );
 
   final Vector2 velocity;
   final double difficultyModifier;
@@ -42,6 +42,7 @@ class Ball extends CircleComponent
     PositionComponent other,
   ) {
     super.onCollisionStart(intersectionPoints, other);
+
     if (other is PlayArea) {
       if (intersectionPoints.first.y <= 0) {
         velocity.y = -velocity.y;
@@ -59,7 +60,7 @@ class Ball extends CircleComponent
           ),
         );
       }
-    } else if (other is Bat) {
+    } else if (other is Paddle) {
       velocity.y = -velocity.y;
       velocity.x =
           velocity.x +

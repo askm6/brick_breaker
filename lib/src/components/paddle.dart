@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 
 import '../brick_breaker.dart';
 
-class Bat extends PositionComponent
+class Paddle extends PositionComponent
     with DragCallbacks, HasGameReference<BrickBreaker> {
-  Bat({
+  Paddle({
     required this.cornerRadius,
     required super.position,
     required super.size,
