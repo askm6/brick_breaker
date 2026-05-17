@@ -3,5 +3,5 @@
 // found in the LICENSE file.
 
 export 'ball.dart';
-export 'bat.dart';
+export 'paddle.dart';
 export 'play_area.dart';
