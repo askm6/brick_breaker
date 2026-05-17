@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import '../brick_breaker.dart';
 import 'bat.dart';
-import 'brick.dart';
 import 'play_area.dart';
 
 class Ball extends CircleComponent
@@ -65,17 +64,6 @@ class Ball extends CircleComponent
       velocity.x =
           velocity.x +
           (position.x - other.position.x) / other.size.x * game.width * 0.3;
-    } else if (other is Brick) {
-      if (position.y < other.position.y - other.size.y / 2) {
-        velocity.y = -velocity.y;
-      } else if (position.y > other.position.y + other.size.y / 2) {
-        velocity.y = -velocity.y;
-      } else if (position.x < other.position.x) {
-        velocity.x = -velocity.x;
-      } else if (position.x > other.position.x) {
-        velocity.x = -velocity.x;
-      }
-      velocity.setFrom(velocity * difficultyModifier);
     }
   }
 }
