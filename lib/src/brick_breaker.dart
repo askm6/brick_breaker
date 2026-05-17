@@ -28,6 +28,9 @@ class BrickBreaker extends FlameGame
 
   final ValueNotifier<int> score = ValueNotifier(0);
   final rand = math.Random();
+  
+  late Paddle leftPaddle;
+  late Paddle rightPaddle;
 
   double get width => size.x;
   double get height => size.y;
@@ -83,13 +86,20 @@ class BrickBreaker extends FlameGame
       ),
     );
 
-    world.add(
-      Paddle(
-        size: Vector2(batWidth, batHeight),
-        cornerRadius: const Radius.circular(ballRadius / 2),
-        position: Vector2(width / 2, height * 0.95),
-      ),
+    leftPaddle = Paddle(
+      size: Vector2(paddleWidth, paddleHeight),
+      cornerRadius: const Radius.circular(ballRadius / 2),
+      position: Vector2(width * 0.08, height / 2),
     );
+
+    rightPaddle = Paddle(
+      size: Vector2(paddleWidth, paddleHeight),
+      cornerRadius: const Radius.circular(ballRadius / 2),
+      position: Vector2(width * 0.92, height / 2),
+    );
+
+    world.add(leftPaddle);
+    world.add(rightPaddle);
   }
 
   @override
@@ -105,14 +115,33 @@ class BrickBreaker extends FlameGame
   ) {
     super.onKeyEvent(event, keysPressed);
 
-    switch (event.logicalKey) {
-      case LogicalKeyboardKey.arrowLeft:
-        world.children.query<Paddle>().first.moveBy(-batStep);
-      case LogicalKeyboardKey.arrowRight:
-        world.children.query<Paddle>().first.moveBy(batStep);
-      case LogicalKeyboardKey.space:
-      case LogicalKeyboardKey.enter:
+    if (playState != PlayState.playing) {
+      if (event.logicalKey == LogicalKeyboardKey.space ||
+          event.logicalKey == LogicalKeyboardKey.enter) {
         startGame();
+      }
+
+      return KeyEventResult.handled;
+    }
+
+    if (keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.keyA)) {
+      leftPaddle.moveBy(-paddleStep);
+    }
+
+    if (keysPressed.contains(LogicalKeyboardKey.keyS) ||
+        keysPressed.contains(LogicalKeyboardKey.keyD)) {
+      leftPaddle.moveBy(paddleStep);
+    }
+
+    if (keysPressed.contains(LogicalKeyboardKey.arrowUp) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight)) {
+      rightPaddle.moveBy(-paddleStep);
+    }
+
+    if (keysPressed.contains(LogicalKeyboardKey.arrowDown) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft)) {
+      rightPaddle.moveBy(paddleStep);
     }
 
     return KeyEventResult.handled;

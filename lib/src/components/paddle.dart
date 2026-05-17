@@ -36,13 +36,19 @@ class Paddle extends PositionComponent
   @override
   void onDragUpdate(DragUpdateEvent event) {
     super.onDragUpdate(event);
-    position.x = (position.x + event.localDelta.x).clamp(0, game.width);
+    final minY = size.y / 2;
+    final maxY = game.height - size.y / 2;
+
+    position.y = (position.y + event.localDelta.y).clamp(minY, maxY);
   }
 
-  void moveBy(double dx) {
+  void moveBy(double dy) {
+    final minY = size.y / 2;
+    final maxY = game.height - size.y / 2;
+
     add(
       MoveToEffect(
-        Vector2((position.x + dx).clamp(0, game.width), position.y),
+        Vector2(position.x, (position.y + dy).clamp(minY, maxY)),
         EffectController(duration: 0.1),
       ),
     );

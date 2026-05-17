@@ -7,8 +7,8 @@ const gameHeight = 1600.0;
 
 const ballRadius = gameWidth * 0.02;
 
-const batWidth = gameWidth * 0.2;
-const batHeight = ballRadius * 2;
-const batStep = gameWidth * 0.05;
+const paddleWidth = gameWidth * 0.025;
+const paddleHeight = gameHeight * 0.15;
+const paddleStep = gameHeight * 0.04;
 
 const difficultyModifier = 1.03;
